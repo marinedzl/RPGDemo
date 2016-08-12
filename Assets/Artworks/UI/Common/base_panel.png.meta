@@ -1,0 +1,171 @@
+fileFormatVersion: 2
+guid: 15533f6ac87caf342bf55053b7880a95
+timeCreated: 1470735200
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: base_panel_0
+    21300002: base_panel_1
+    21300004: base_panel_2
+    21300006: base_panel_3
+    21300008: base_panel_4
+    21300010: base_panel_5
+    21300012: base_panel_6
+    21300014: base_panel_7
+    21300016: base_panel_8
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 20, y: 20, z: 20, w: 20}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: base_panel_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -45, y: 46}
+        - {x: -46, y: 45}
+        - {x: -46, y: -46}
+        - {x: 46, y: -46}
+        - {x: 46, y: 44}
+        - {x: 44, y: 46}
+    - name: base_panel_1
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 61.333336
+        width: 30.666666
+        height: 30.666666
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: base_panel_2
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 61.333336
+        width: 30.666666
+        height: 30.666666
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: base_panel_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 31.333334
+        width: 30.666666
+        height: 30.666666
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: base_panel_4
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 31.333334
+        width: 30.666666
+        height: 30.666666
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: base_panel_5
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 31.333334
+        width: 30.666666
+        height: 30.666666
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: base_panel_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1.333334
+        width: 30.666666
+        height: 30.666666
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: base_panel_7
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 1.333334
+        width: 30.666666
+        height: 30.666666
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: base_panel_8
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 1.333334
+        width: 30.666666
+        height: 30.666666
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
