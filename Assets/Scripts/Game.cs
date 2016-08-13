@@ -88,23 +88,6 @@ public class Game : MonoBehaviour
 		s_instance = this;
 		DontDestroyOnLoad(gameObject);
 	}
-	
-	public class GlobalConfig
-	{
-		public enum KeyType
-		{
-			Integer,
-			Floating,
-		}
-		public string globalKey;
-		public string note;
-		public KeyType keyType;
-		public float valueA;
-		public float valueB;
-		public float valueC;
-		public float valueD;
-		public float valueE;
-	}
 
 	void Start()
 	{
