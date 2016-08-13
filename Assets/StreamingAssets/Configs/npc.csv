@@ -1,0 +1,5 @@
+id,name,desc,model,scaling
+#,名字,描述,模型,缩放
+20001,,,knight,0.7
+20002,,,Archer,0.7
+20003,,,Mage,0.6
