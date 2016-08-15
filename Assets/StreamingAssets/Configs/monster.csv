@@ -1,3 +1,3 @@
-id,name,desc,model,scaling
-#,名字,描述,模型,缩放
-10001,,,Skeleton,0.7
+id,name,desc,model,scaling,hp,atk,def,exp
+#,名字,描述,模型,缩放,hp,atk,def,exp
+10001,,,Skeleton,0.7,100,10,1,10

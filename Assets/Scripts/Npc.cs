@@ -9,6 +9,9 @@ public class Npc : MonoBehaviour
 		public string desc;
 		public string model;
 		public float scaling;
+		public int hp;
+		public int atk;
+		public int def;
 	}
 
 	public int m_id;

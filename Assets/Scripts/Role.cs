@@ -1,8 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Role : MonoBehaviour
 {
+	public enum Team
+	{
+		Red,
+		Blue,
+		Yellow,
+	}
+
 	public float m_MoveSpeed = 0f;
+	public Team team;
+	public int m_id;
+
+	public int hp;
+	public int atk;
+	public int def;
+	public int exp;
 
 	Animator m_animator;
 	CharacterController m_cc;
@@ -27,6 +42,7 @@ public class Role : MonoBehaviour
 		m_animator.ResetTrigger("Move");
 		m_animator.ResetTrigger("Attack");
 		m_animator.ResetTrigger("Hit");
+		m_animator.ResetTrigger("Dead");
 	}
 
 	public void Rotate(Vector3 dir, float lerp)
@@ -53,7 +69,7 @@ public class Role : MonoBehaviour
 
 	public bool IsAlive()
 	{
-		return true;
+		return hp > 0;
 	}
 
 	public void Move()
@@ -74,9 +90,60 @@ public class Role : MonoBehaviour
 		m_animator.SetTrigger("Attack");
 	}
 
-	public void Hit(Role from)
+	public void Hit()
 	{
 		ResetTrigger();
 		m_animator.SetTrigger("Hit");
+	}
+
+	public void Dead()
+	{
+		ResetTrigger();
+		m_animator.SetTrigger("Dead");
+	}
+
+	void OnAttackHit()
+	{
+		Hit(2.5f, 90);
+	}
+
+	void Hit(float range, float angle)
+	{
+		List<Role> units = Game.Map.FindNearbyEnemy(this, range);
+		Vector3 forward = transform.forward;
+		forward.y = 0;
+		foreach (var unit in units)
+		{
+			Vector3 delta = unit.transform.position - transform.position;
+			delta.y = 0;
+			if (Vector3.Angle(forward, delta) < angle)
+			{
+				unit.Hit(this);
+			}
+		}
+	}
+
+	public void Hit(Role from)
+	{
+		CalculateDamage(from);
+		if (!IsAlive())
+		{
+			Dead();
+			if (from == Game.Map.player)
+				Game.AwardExp(exp);
+		}
+		else
+		{
+			Hit();
+		}
+	}
+
+	void CalculateDamage(Role from)
+	{
+		int damage = from.atk - def;
+		if (damage > 0)
+		{
+			hp = Mathf.Max(hp - damage, 0);
+		}
 	}
 }

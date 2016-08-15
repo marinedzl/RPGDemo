@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Game : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class Game : MonoBehaviour
 	Map m_map;
 	SaveData.Record m_record;
 	public CameraController m_camera;
+	UIConfirm m_uiConfirm;
 
 	void Start()
 	{
@@ -76,6 +78,7 @@ public class Game : MonoBehaviour
 		record.name = name;
 		record.level = 1;
 		record.money = 1000;
+		record.exp = 0;
 		record._class = _class;
 
 		SaveData data = Database.LoadSaveData();
@@ -88,5 +91,41 @@ public class Game : MonoBehaviour
 	public static void SaveMap()
 	{
 		Map.SaveMapInfo();
+	}
+
+	public static void AwardExp(int exp)
+	{
+		LevelInfo levelInfo = Database.GetLevelInfo(Record.level);
+		Record.exp += exp;
+		if (Record.exp >= levelInfo.exp) // level up
+		{
+			Record.level += 1;
+			Record.exp -= levelInfo.exp;
+			levelInfo = Database.GetLevelInfo(Record.level);
+			Map.player.hp = levelInfo.hp;
+			Map.player.atk = levelInfo.atk;
+			Map.player.def = levelInfo.def;
+		}
+	}
+
+	public static void CreateUI()
+	{
+		GameObject uiRoot = Database.LoadResource("UI");
+		s_instance.m_uiConfirm = uiRoot.transform.FindChild("UIConfirm").GetComponent<UIConfirm>();
+		s_instance.m_uiConfirm.gameObject.SetActive(false);
+	}
+
+	public static void OpenSaveData()
+	{
+		s_instance.StartCoroutine(s_instance.WaitingSaveData());
+	}
+
+	public IEnumerator WaitingSaveData()
+	{
+		yield return m_uiConfirm.Open("Save", "Cancel");
+		if (m_uiConfirm.selection)
+		{
+			Debug.Log("Save data");
+		}
 	}
 }

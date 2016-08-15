@@ -9,14 +9,25 @@ public class SaveData
 		public string name;
 		public int level;
 		public int money;
+		public int exp;
 	}
 	public List<Record> records = new List<Record>();
+}
+
+public class LevelInfo
+{
+	public int level;
+	public int hp;
+	public int atk;
+	public int def;
+	public int exp;
 }
 
 public class Database
 {
 	public Dictionary<int, Npc.Info> m_npcInfos;
 	public Dictionary<int, Monster.Info> m_monsterInfo;
+	public List<LevelInfo> m_levelInfos;
 
 	public void Init()
 	{
@@ -31,6 +42,9 @@ public class Database
 		m_monsterInfo = new Dictionary<int, Monster.Info>();
 		foreach (var item in monsterList)
 			m_monsterInfo.Add(item.id, item);
+
+		url = string.Format("{0}/StreamingAssets/Configs/level.csv", Application.dataPath);
+		m_levelInfos = Tools.LoadCsvFile<LevelInfo>(url);
 	}
 
 	public Npc.Info GetNpcInfo(int id)
@@ -41,6 +55,11 @@ public class Database
 	public Monster.Info GetMonsterInfo(int id)
 	{
 		return m_monsterInfo[id];
+	}
+
+	public LevelInfo GetLevelInfo(int level)
+	{
+		return m_levelInfos[level];
 	}
 
 	const string SaveDataFileName = "SaveData.xml";
