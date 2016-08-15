@@ -2,7 +2,7 @@
 
 public class CameraController : MonoBehaviour
 {
-	public Transform m_target;
+	Transform m_target;
 
 	public float m_maxDistance = 5;
 	public float m_minDistance = 1;
@@ -27,15 +27,32 @@ public class CameraController : MonoBehaviour
 	Vector3 m_downPos;
 	bool m_down = false;
 
+	public Transform target
+	{
+		set
+		{
+			m_target = value;
+			ResetTarget();
+		}
+	}
+
 	void Start()
 	{
-		m_distanceEnd = m_defaultDistance;
-		m_angleEnd = new Vector3(m_defaultPitch, -m_target.eulerAngles.y, 0);
+		target = null;
+	}
 
-		m_distance = m_distanceEnd;
-		m_angle = m_angleEnd;
+	void ResetTarget()
+	{
+		if (m_target != null)
+		{
+			m_distanceEnd = m_defaultDistance;
+			m_angleEnd = new Vector3(m_defaultPitch, -m_target.eulerAngles.y, 0);
 
-		UpdateTransform();
+			m_distance = m_distanceEnd;
+			m_angle = m_angleEnd;
+
+			UpdateTransform();
+		}
 	}
 
 	void UpdateTransform()
@@ -55,6 +72,9 @@ public class CameraController : MonoBehaviour
 	
 	void Update()
 	{
+		if (m_target == null)
+			return;
+
 		Vector2 mouseScrollDelta = Input.mouseScrollDelta;
 		if (mouseScrollDelta.y != 0)
 		{

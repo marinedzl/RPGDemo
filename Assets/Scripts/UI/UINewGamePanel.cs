@@ -17,7 +17,7 @@ public class UINewGamePanel : MonoBehaviour
 
 		if (m_roles[index] == null)
 		{
-			m_roles[index] = Game.Instance.LoadResource("Roles/" + m_class.ToString());
+			m_roles[index] = Game.Database.LoadResource("Roles/" + m_class.ToString());
 		}
 
 		for (int i = 0; i < m_roles.Length; i++)
@@ -54,6 +54,6 @@ public class UINewGamePanel : MonoBehaviour
 		string name = "Hero";
 		if (!string.IsNullOrEmpty(m_inputField.text))
 			name = m_inputField.text;
-		Game.Instance.NewGame(name, m_class);
+		Game.NewGame(name, m_class);
 	}
 }

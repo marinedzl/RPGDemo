@@ -26,6 +26,6 @@ public class UISaveDataRecord : MonoBehaviour
 
 	public void OnClick()
 	{
-		Game.Instance.ContinueGame(m_record);
+		Game.ContinueGame(m_record);
 	}
 }

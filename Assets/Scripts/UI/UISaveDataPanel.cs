@@ -23,7 +23,7 @@ public class UISaveDataPanel : MonoBehaviour
 
 	void Refresh()
 	{
-		SaveData saveData = Game.Instance.LoadSaveData();
+		SaveData saveData = Game.Database.LoadSaveData();
 
 		Clear();
 

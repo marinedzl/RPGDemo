@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,12 +21,11 @@ public class SceneExporter
 	[MenuItem("Marine/LoadMapInfo")]
 	public static void LoadMapInfo()
 	{
-		Game.Instance.LoadMapInfo(SceneManager.GetActiveScene().name);
 	}
 
 	[MenuItem("Marine/SaveMapInfo")]
 	public static void SaveMapInfo()
 	{
-		Game.Instance.SaveMapInfo(SceneManager.GetActiveScene().name);
+		Game.Map.SaveMapInfo();
 	}
 }
