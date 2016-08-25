@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveData
 {
@@ -28,22 +31,23 @@ public class Database
 	public Dictionary<int, Npc.Info> m_npcInfos;
 	public Dictionary<int, Monster.Info> m_monsterInfo;
 	public List<LevelInfo> m_levelInfos;
+	private AssetBundle m_effectBundle;
 
 	public void Init()
 	{
-		string url = string.Format("{0}/StreamingAssets/Configs/npc.csv", Application.dataPath);
+		string url = string.Format("{0}/Configs/npc.csv", Application.streamingAssetsPath);
 		List<Npc.Info> npcList = Tools.LoadCsvFile<Npc.Info>(url);
 		m_npcInfos = new Dictionary<int, Npc.Info>();
 		foreach (var item in npcList)
 			m_npcInfos.Add(item.id, item);
 
-		url = string.Format("{0}/StreamingAssets/Configs/monster.csv", Application.dataPath);
+		url = string.Format("{0}/Configs/monster.csv", Application.streamingAssetsPath);
 		List<Monster.Info> monsterList = Tools.LoadCsvFile<Monster.Info>(url);
 		m_monsterInfo = new Dictionary<int, Monster.Info>();
 		foreach (var item in monsterList)
 			m_monsterInfo.Add(item.id, item);
 
-		url = string.Format("{0}/StreamingAssets/Configs/level.csv", Application.dataPath);
+		url = string.Format("{0}/Configs/level.csv", Application.streamingAssetsPath);
 		m_levelInfos = Tools.LoadCsvFile<LevelInfo>(url);
 	}
 
@@ -81,5 +85,59 @@ public class Database
 	public GameObject LoadResource(string path)
 	{
 		return Object.Instantiate(Resources.Load(path)) as GameObject;
+	}
+
+	public IEnumerator LoadEffectBundle()
+	{
+		if (m_effectBundle == null)
+		{
+			string url = string.Format("{0}/AssetBundles/effects", Application.streamingAssetsPath);
+			AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(url);
+			yield return request;
+			m_effectBundle = request.assetBundle;
+		}
+	}
+
+	public GameObject CreateEffect(string name)
+	{
+		Object prefab = m_effectBundle.LoadAsset(name);
+		if (prefab != null)
+			return Object.Instantiate(prefab) as GameObject;
+		return null;
+	}
+
+	public IEnumerator LoadScene(string name)
+	{
+		string url = string.Format("file://{0}/AssetBundles/scenes/{1}", Application.streamingAssetsPath, name);
+		WWW www = new WWW(url);
+		yield return www;
+
+		if (www.error != null)
+		{
+			Debug.LogError(www.error);
+		}
+		else
+		{
+			AssetBundle bunlde = www.assetBundle;
+			yield return SceneManager.LoadSceneAsync(name);
+			bunlde.Unload(false);
+		}
+	}
+
+	public MapInfo LoadMapInfo(string name)
+	{
+		MapInfo mapInfo = null;
+		string path = string.Format("{0}/Scenes/{1}.xml", Application.streamingAssetsPath, name);
+
+		if (File.Exists(path))
+			mapInfo = Tools.LoadXmlFile<MapInfo>(path);
+
+		return mapInfo;
+	}
+
+	public void SaveMapInfo(MapInfo mapInfo, string name)
+	{
+		string path = string.Format("{0}/Scenes/{1}.xml", Application.streamingAssetsPath, name);
+		Tools.WriteXmlFile(mapInfo, path);
 	}
 }

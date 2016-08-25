@@ -18,6 +18,12 @@ public class SceneExporter
 		BuildPipeline.BuildPlayer(null, path, BuildTarget.WebPlayer, BuildOptions.BuildAdditionalStreamedScenes);
 	}
 
+	[MenuItem("Marine/BuildAssetBundles")]
+	public static void BuildAssetBundles()
+	{
+		BuildPipeline.BuildAssetBundles("{0}/StreamingAssets/AssetBundles", BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
+	}
+
 	[MenuItem("Marine/LoadMapInfo")]
 	public static void LoadMapInfo()
 	{

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -91,40 +90,22 @@ public class Map
 		}
 	}
 
+	void Clear()
+	{
+		m_roles = new List<Role>();
+		m_player = null;
+	}
+
 	public IEnumerator Load(string name)
 	{
+		Clear();
 		m_name = name;
-		yield return LoadScene();
+		yield return SceneManager.LoadSceneAsync("Loading");
+		yield return Game.Database.LoadEffectBundle();
+		yield return Game.Database.LoadScene(name);
 		CreateTree();
 		LoadMapInfo();
 		Game.CreateUI();
-	}
-
-	public IEnumerator LoadScene()
-	{
-		yield return SceneManager.LoadSceneAsync("Loading");
-
-		string url = string.Format("file://{0}/StreamingAssets/Scenes/{1}.assetbundle", Application.dataPath, m_name);
-		WWW www = new WWW(url);
-		yield return www;
-
-		if (www.error != null)
-		{
-			Debug.LogError(www.error);
-		}
-		else
-		{
-			while (!www.isDone)
-				yield return null;
-
-			AssetBundle assetbundle = www.assetBundle;
-
-			yield return SceneManager.LoadSceneAsync(m_name);
-
-			assetbundle.Unload(false);
-		}
-
-		www.Dispose();
 	}
 
 	void CreateTree()
@@ -159,17 +140,12 @@ public class Map
 
 	public void LoadMapInfo()
 	{
-		MapInfo mapInfo = null;
-		string path = string.Format("{0}/StreamingAssets/Scenes/{1}.xml", Application.dataPath, m_name);
+		MapInfo mapInfo = Game.Database.LoadMapInfo(m_name);
 
-		if (File.Exists(path))
-			mapInfo = Tools.LoadXmlFile<MapInfo>(path);
-		else
+		if (mapInfo == null)
 			mapInfo = new MapInfo();
 
 		mapInfo.born.CopyTo(m_bornPosition);
-
-		m_roles = new List<Role>();
 
 		foreach (var item in mapInfo.npc)
 			CreateNpc(item);
@@ -244,13 +220,12 @@ public class Map
 			}
 		}
 
-		string path = string.Format("{0}/StreamingAssets/Scenes/{1}.xml", Application.dataPath, m_name);
-		Tools.WriteXmlFile(mapInfo, path);
+		Game.Database.SaveMapInfo(mapInfo, m_name);
 	}
 
 	public void CreateSavePoint(MapInfo.Position data)
 	{
-		GameObject go = Game.Database.LoadResource("Map/SavePoint");
+		GameObject go = Game.Database.CreateEffect("guanghuan");
 		go.transform.SetParent(m_savePointRoot);
 		data.CopyTo(go.transform);
 		go.AddComponent<SavePoint>();

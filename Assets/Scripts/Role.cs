@@ -144,6 +144,15 @@ public class Role : MonoBehaviour
 		if (damage > 0)
 		{
 			hp = Mathf.Max(hp - damage, 0);
+			GameObject effect = Game.Database.CreateEffect("hit");
+			if (effect != null)
+			{
+				effect.transform.SetParent(transform.GetChild(0));
+				effect.transform.localScale = Vector3.one;
+				effect.transform.localRotation = Quaternion.identity;
+				effect.transform.localPosition = Vector3.zero;
+				Destroy(effect, 10);
+			}
 		}
 	}
 }
